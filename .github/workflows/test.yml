@@ -36,9 +36,4 @@ jobs:
       - name: Run tests with Maven
         run: mvn test
 
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: target/surefire-reports/  # Путь к отчетам Surefire, если используются стандартные настройки
+
