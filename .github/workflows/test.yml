@@ -33,18 +33,19 @@ jobs:
       - name: Install dependencies
         run: mvn install -DskipTests
 
-      - name: Install Chrome and ChromeDriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          # Check the installed version of Google Chrome
-          google-chrome-stable --version
-          # Use the same version number for ChromeDriver
-          CHROME_VERSION=$(google-chrome-stable --version | awk '{print $3}')
-          CHROME_DRIVER_VERSION=$(curl -sSL https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-          wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin
+      name: "setup-chromedriver"
+      description: "Setup chromedriver"
+      author: "nanasess"
+      inputs:
+        chromedriver-version:
+          description: "The chromedriver version to install"
+          required: false
+        chromeapp:
+          description: "Custom chrome binary name (for Linux or MacOS)"
+          required: false
+      runs:
+        using: "node20"
+        main: "dist/index.js"
 
       - name: Run tests with Maven
         run: mvn test
