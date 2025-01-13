@@ -36,11 +36,8 @@ jobs:
       - name: Install Chrome and ChromeDriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          # Install webdriver-manager
-          sudo npm install -g webdriver-manager
-          # Update ChromeDriver to match installed Chrome version
-          webdriver-manager update --versions.chrome stable
+          sudo apt-get install -y google-chrome-stable chromium-chromedriver
+          sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/local/bin/chromedriver
 
       - name: Run tests with Maven
         run: mvn test
